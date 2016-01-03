@@ -13,13 +13,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView tempResult;
     private EditText enteredValue;
     private Button fButton;
     private Button cButton;
-
+    DecimalFormat round  = new DecimalFormat("0.0");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +51,11 @@ public class MainActivity extends AppCompatActivity {
                 if(editTextVal.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Enter a Value", Toast.LENGTH_LONG).show();
                 } else {
-                    int intEditText = Integer.parseInt(editTextVal);
-                    convertToFahrenheit(intEditText);
+                    double converterResult;
+                    double doubleEditTextVal = Double.parseDouble(editTextVal);
+                    converterResult = convertToFahrenheit(doubleEditTextVal);
+                    String stringResult = String.valueOf(round.format(converterResult));
+                    tempResult.setText(stringResult + " F");
                 }
 
             }
@@ -64,19 +69,31 @@ public class MainActivity extends AppCompatActivity {
                 if(editTextVal.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Enter a Value", Toast.LENGTH_LONG).show();
                 } else {
-                    int intEditText = Integer.parseInt(editTextVal);
-                    convertToCelsius(intEditText);
+                    double converterResult;
+                    double doubleEditTextVal = Double.parseDouble(editTextVal);
+                    converterResult = convertToCelsius(doubleEditTextVal);
+
+                    String stringResult = String.valueOf(round.format(converterResult));
+                    tempResult.setText(stringResult + " C");
                 }
             }
         });
     }
 
-    public int convertToCelsius(int fVal){
-        return 0;
+    public double convertToCelsius(double fVal){
+        double result;
+        double multiplier;
+        multiplier = 5.0/9.0;
+        result = (fVal - 32) * multiplier;
+        return result;
     }
 
-    public int convertToFahrenheit(int cVal){
-        return 0;
+    public double convertToFahrenheit(double cVal){
+        double result;
+        double multiplier;
+        multiplier = 5.0/9.0;
+        result = cVal  * multiplier + 32;
+        return result;
     }
 
 
